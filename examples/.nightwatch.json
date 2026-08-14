@@ -1,0 +1,33 @@
+{
+  "window": {
+    "start": "23:00",
+    "end": "07:00"
+  },
+  "max_items": 4,
+  "max_usd": 8.0,
+  "agent_command": [
+    "claude",
+    "-p",
+    "{prompt}"
+  ],
+  "tier1": [
+    {
+      "kinds": [
+        "drift"
+      ],
+      "paths": [
+        "docs/**",
+        "**/*.md"
+      ]
+    }
+  ],
+  "never_tier1": [
+    ".github/**",
+    "**/*.env",
+    "**/secrets/**"
+  ],
+  "default_branch": "main",
+  "branch_prefix": "nightwatch/",
+  "est_usd_per_item": 1.0,
+  "enabled": true
+}

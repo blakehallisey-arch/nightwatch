@@ -1,0 +1,81 @@
+Real output, captured from a scratch repo on 2026-08-14. Nothing here is
+a mockup. The three items are the ones in examples/queue.json.
+
+$ nightwatch run --dry-run
+
+fire-20260814-101317: stood down — outside the window (23:00-07:00) — local time 10:13
+
+It is 10am and the window is 23:00-07:00, so it stood down and said why.
+Run it again with --force to see the plan:
+
+$ nightwatch run --dry-run --force
+
+note: outside the window (23:00-07:00) — local time 10:13 — running anyway because --force was passed
+fire-20260814-101317  night mode  DRY RUN
+  outside the window (23:00-07:00) — local time 10:13
+  lids: 4 items, $8.00 estimated
+
+  [1] 0814-fix-the-dead-link-in-docs  Fix the dead link in docs/install.md
+      tier 1 — kind 'drift' and every path under docs/**, **/*.md
+      branch nightwatch/0814-fix-the-dead-link-in-docs
+      on success: merge into main
+      estimate $1.00  (running total $1.00)
+      log .nightwatch/logs/fire-20260814-101317/0814-fix-the-dead-link-in-docs.log
+      env UNATTENDED_RUN=1 NIGHTWATCH_MAY_MERGE=1
+      run claude -p "You are running unattended under nightwatch.  Item 0814-fix-the-dea..."
+
+  [2] 0814-rotate-the-deploy-key-reference  Rotate the deploy key reference
+      tier 2 — deploy/keys.env is on never_tier1 (**/*.env)
+      WARNING item claimed tier 1 — derived tier 2 (deploy/keys.env is on never_tier1 (**/*.env)). The claim was ignored.
+      branch nightwatch/0814-rotate-the-deploy-key-reference
+      on success: open a PR and stop
+      estimate $1.00  (running total $2.00)
+      log .nightwatch/logs/fire-20260814-101317/0814-rotate-the-deploy-key-reference.log
+      env UNATTENDED_RUN=1 NIGHTWATCH_MAY_MERGE=0
+      run claude -p "You are running unattended under nightwatch.  Item 0814-rotate-the-..."
+
+  [3] 0814-add-a-since-flag-to-the-export  Add a --since flag to the export command
+      tier 2 — no tier1 rule matched
+      branch nightwatch/0814-add-a-since-flag-to-the-export
+      on success: open a PR and stop
+      estimate $3.50  (running total $5.50)
+      log .nightwatch/logs/fire-20260814-101317/0814-add-a-since-flag-to-the-export.log
+      env UNATTENDED_RUN=1 NIGHTWATCH_MAY_MERGE=0
+      run claude -p "You are running unattended under nightwatch.  Item 0814-add-a-since..."
+
+stop: the queue is empty
+
+Then a real fire. agent_command was set to /bin/echo for the capture, so
+the only thing ever invoked was echo — which exits 0 without reporting,
+and that is exactly the case worth showing: the items land BLOCKED with
+a reason, not silently dropped.
+
+$ nightwatch run --force
+
+note: outside the window (23:00-07:00) — local time 10:13 — running anyway because --force was passed
+0814-fix-the-dead-link-in-docs: blocked — the agent exited 0 without reporting
+0814-rotate-the-deploy-key-reference: item claimed tier 1 — derived tier 2 (deploy/keys.env is on never_tier1 (**/*.env)). The claim was ignored.
+0814-rotate-the-deploy-key-reference: blocked — the agent exited 0 without reporting
+
+$ nightwatch done 0814-add-a-since-flag-to-the-export --pr 41 --result "opened a PR"
+0814-add-a-since-flag-to-the-export -> pr-open
+
+$ nightwatch report
+
+open PRs waiting on you: 1
+  0814-add-a-since-flag-to-the-export  Add a --since flag to the export command  [#41]
+
+cross-check: gh failed (failed to run git: fatal: not a git repository (or any of the parent directories): .git), so the cross-check was skipped
+
+fire-20260814-101317  night mode
+  blocked   0814-fix-the-dead-link-in-docs  Fix the dead link in docs/install.md
+            tier 1 — kind 'drift' and every path under docs/**, **/*.md
+            the agent exited 0 without reporting
+            $1.00 (estimate from config)
+  blocked   0814-rotate-the-deploy-key-reference  Rotate the deploy key reference
+            tier 2 — deploy/keys.env is on never_tier1 (**/*.env)
+            WARNING item claimed tier 1 — derived tier 2 (deploy/keys.env is on never_tier1 (**/*.env)). The claim was ignored.
+            the agent exited 0 without reporting
+            $1.00 (estimate from config)
+  spent $2.00 of $8.00
+  stopped: item lid: 2 item(s) is the limit for one fire

@@ -1,0 +1,57 @@
+{
+  "updated": "2026-08-14T10:13:16",
+  "items": [
+    {
+      "id": "0814-fix-the-dead-link-in-docs",
+      "title": "Fix the dead link in docs/install.md",
+      "body": "The install section points at a path that moved.",
+      "kind": "drift",
+      "tier": null,
+      "status": "queued",
+      "created": "2026-08-14T10:13:16",
+      "started": null,
+      "finished": null,
+      "result": null,
+      "pr": null,
+      "notes": [],
+      "paths": [
+        "docs/install.md"
+      ]
+    },
+    {
+      "id": "0814-rotate-the-deploy-key-reference",
+      "title": "Rotate the deploy key reference",
+      "body": "Config still names the old key.",
+      "kind": "drift",
+      "tier": 1,
+      "status": "queued",
+      "created": "2026-08-14T10:13:16",
+      "started": null,
+      "finished": null,
+      "result": null,
+      "pr": null,
+      "notes": [],
+      "paths": [
+        "deploy/keys.env"
+      ]
+    },
+    {
+      "id": "0814-add-a-since-flag-to-the-export",
+      "title": "Add a --since flag to the export command",
+      "body": "Users want to export a date range.",
+      "kind": "build",
+      "tier": null,
+      "status": "queued",
+      "created": "2026-08-14T10:13:16",
+      "started": null,
+      "finished": null,
+      "result": null,
+      "pr": null,
+      "notes": [],
+      "paths": [
+        "src/export.py"
+      ],
+      "est_usd": 3.5
+    }
+  ]
+}
