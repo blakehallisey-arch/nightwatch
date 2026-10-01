@@ -263,3 +263,7 @@ watching every step.
 | nightwatch | the run rail — a queue, a budget lid, a window, and an honest log |
 | [draftdiff](https://github.com/blakehallisey-arch/draftdiff) | learns your voice from the edits you make before you hit send |
 | [ledger](https://github.com/blakehallisey-arch/ledger) | gives stateless agents a memory of what you did with their advice |
+
+Built by Blake Hallisey. These six came out of one rail running overnight
+against a real repo. The longer story, and what each night cost, is at
+[how I use AI](https://blakehallisey.com/how-i-use-ai).
